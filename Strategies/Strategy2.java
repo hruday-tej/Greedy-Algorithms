@@ -3,7 +3,7 @@ package Strategies;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-class BagComparator implements Comparator<Bag> {
+class Strategy2Comparator implements Comparator<Bag> {
     @Override
     public int compare(Bag bag1, Bag bag2) {
         // Floor or ceil
@@ -25,20 +25,31 @@ public class Strategy2 {
     public int n;
     public int k;
     public Bag[] bags;
+    PriorityQueue<Bag> priorityQueue;
 
     public Strategy2(int n, int k, Bag[] bags) {
         this.n = n;
         this.k = k;
         this.bags = bags;
-    }
-
-    public double CalculateTimetaken() {
-        long startTime = System.nanoTime();
-        PriorityQueue<Bag> priorityQueue = new PriorityQueue<>(new BagComparator());
-        // Iterate to take input.
+        priorityQueue = new PriorityQueue<>(new Strategy2Comparator());
         for (int itr = 0; itr < bags.length; itr++) {
             priorityQueue.add(bags[itr]);
         }
+    }
+    public double execute(){
+        PriorityQueue <Bag> pqDup = priorityQueue;
+        double percentage = 0;
+        while(pqDup.size()!=0){
+            Bag b = pqDup.poll();
+            percentage += b.calculatePercentage();
+        }
+
+        return percentage/n;
+    }
+    public double CalculateTimetaken() {
+        long startTime = System.nanoTime();
+        // Iterate to take input.
+        
 
         // Run a loop k times.
         while (k-- > 0) {
@@ -61,7 +72,7 @@ public class Strategy2 {
         int k = Integer.parseInt(input[1]);
         int n = Integer.parseInt(input[0]);
         // Intialize minHeap of type Bag with BagComparator.
-        PriorityQueue<Bag> bags = new PriorityQueue<>(new BagComparator());
+        PriorityQueue<Bag> bags = new PriorityQueue<>(new Strategy2Comparator());
         // Iterate to take input.
         for (int i = 0; i < n; i++) {
             String[] counts = sc.nextLine().trim().split(" ");

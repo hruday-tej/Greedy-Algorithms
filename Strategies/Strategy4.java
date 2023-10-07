@@ -44,25 +44,25 @@ public class Strategy4 {
     public int n;
     public int k;
     public Bag[] bags;
+    PriorityQueue<Bag> priorityQueue = new PriorityQueue<Bag>(n, new Strategy4Comparator());
 
     public Strategy4(int n, int k, Bag[] bags) {
         this.n = n;
         this.k = k;
         this.bags = bags;
-    }
-
-    public double CalculateTimetaken() {
-        long startTime = System.nanoTime();
-
-        PriorityQueue<Bag> priorityQueue = new PriorityQueue<Bag>(n, new Strategy4Comparator());
-        List<Integer> pickedBags = new ArrayList<>();
-        for (int iterator = 0; iterator < n; iterator++) {
+                for (int iterator = 0; iterator < n; iterator++) {
 
             // System.out.println("BAGSSS -> "+bags[iterator].totalDevices + " " +
             // bags[iterator].workingDevices);
             priorityQueue.add(bags[iterator]);
         }
 
+    }
+
+    public double execute() {
+        long startTime = System.nanoTime();
+
+        List<Integer> pickedBags = new ArrayList<>();
         while (k > 0) {
             /*
              * While there are extra devices to be added to the bags
@@ -85,6 +85,16 @@ public class Strategy4 {
         // System.out.println(y-x);
         return TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
 
+    }
+    public double CalculatePercentage(){
+        PriorityQueue <Bag> pqDup = priorityQueue;
+        double percentage = 0;
+        while(pqDup.size()!=0){
+            Bag b = pqDup.poll();
+            percentage += b.calculatePercentage();
+        }
+
+        return percentage/n;
     }
 
     public static void main(String[] args) {
