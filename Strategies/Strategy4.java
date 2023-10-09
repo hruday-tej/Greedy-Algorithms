@@ -33,10 +33,9 @@ class Strategy4Comparator implements Comparator<Bag> {
         // System.out.println("ratio 1 -> "+ratio1+" ratio 2 -> "+ratio2);
         if (ratio1 != ratio2) {
             return Double.compare(ratio2, ratio1);
-        } else {
-            Integer.compare(b1.index, b2.index);
         }
-        return Integer.compare(b1.workingDevices, b2.workingDevices);
+        
+        return Integer.compare(b1.index, b2.index);
     }
 }
 
@@ -44,25 +43,26 @@ public class Strategy4 {
     public int n;
     public int k;
     public Bag[] bags;
+    PriorityQueue<Bag> priorityQueue;
 
     public Strategy4(int n, int k, Bag[] bags) {
         this.n = n;
         this.k = k;
         this.bags = bags;
-    }
-
-    public double CalculateTimetaken() {
-        long startTime = System.nanoTime();
-
-        PriorityQueue<Bag> priorityQueue = new PriorityQueue<Bag>(n, new Strategy4Comparator());
-        List<Integer> pickedBags = new ArrayList<>();
-        for (int iterator = 0; iterator < n; iterator++) {
+        priorityQueue = new PriorityQueue<Bag>(n, new Strategy4Comparator());
+                for (int iterator = 0; iterator < n; iterator++) {
 
             // System.out.println("BAGSSS -> "+bags[iterator].totalDevices + " " +
             // bags[iterator].workingDevices);
             priorityQueue.add(bags[iterator]);
         }
 
+    }
+
+    public double execute() {
+        long startTime = System.nanoTime();
+
+        List<Integer> pickedBags = new ArrayList<>();
         while (k > 0) {
             /*
              * While there are extra devices to be added to the bags
@@ -85,6 +85,17 @@ public class Strategy4 {
         // System.out.println(y-x);
         return TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
 
+    }
+    public double CalculatePercentage(){
+        System.out.println("in 44");
+        PriorityQueue <Bag> pqDup = priorityQueue;
+        double percentage = 0;
+        while(pqDup.size()!=0){
+            Bag b = pqDup.poll();
+            percentage += b.calculatePercentage();
+        }
+
+        return percentage/n;
     }
 
     public static void main(String[] args) {
@@ -126,9 +137,9 @@ public class Strategy4 {
             k--;
         }
 
-        System.out.println(pickedBags.toString().replace(",", " ")
+        System.out.println(pickedBags.toString().replace(",", "")
                 .replace("[", "")
-                .replace("]", ""));
+                .replace("]", "").replace("-n", ""));
 
     }
 }

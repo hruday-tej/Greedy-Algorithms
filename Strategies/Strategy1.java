@@ -34,20 +34,22 @@ public class Strategy1 {
     public int k;
     public Bag[] bags;
     private static final DecimalFormat decimalFormatter = new DecimalFormat("0.000000000");
+    PriorityQueue<Bag> priorityQueue;
 
     public Strategy1(int n, int k, Bag[] bags) {
         this.n = n;
         this.k = k;
         this.bags = bags;
-    }
-
-    public double CalculateTimetaken() {
-        long x = System.nanoTime();
-        PriorityQueue<Bag> priorityQueue = new PriorityQueue<Bag>(n, new Strategy1Comparator());
-        // System.out.println(startTime);
+        this.priorityQueue = new PriorityQueue<Bag>(n, new Strategy1Comparator());
         for (int itr = 0; itr < bags.length; itr++) {
             priorityQueue.add(bags[itr]);
         }
+    }
+
+    public double execute() {
+        long x = System.nanoTime();
+        // System.out.println(startTime);
+        
 
         while (k > 0) {
             /*
@@ -67,9 +69,18 @@ public class Strategy1 {
         }
         long y = System.nanoTime();
         return TimeUnit.MILLISECONDS.convert(y - x, TimeUnit.NANOSECONDS);
-
     }
 
+    public double CalculatePercentage(){
+        PriorityQueue <Bag> pqDup = priorityQueue;
+        double percentage = 0;
+        while(pqDup.size()!=0){
+            Bag b = pqDup.poll();
+            percentage += b.calculatePercentage();
+        }
+
+        return percentage/n;
+    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         // Reading the input for n and k
@@ -110,7 +121,7 @@ public class Strategy1 {
         double stopTime = System.currentTimeMillis();
         long y = System.nanoTime();
 
-        System.out.println(pickedBags.toString().replace(",", " ")
+        System.out.println(pickedBags.toString().replace(",", "")
                 .replace("[", "")
                 .replace("]", ""));
 

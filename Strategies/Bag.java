@@ -10,7 +10,7 @@ public class Bag {
         this.index = index;
     }
     public int calculatePercentage() {
-        return (int) ((totalDevices * 100) / workingDevices);
+        return (int) ((workingDevices * 100) / totalDevices);
     }
     public String toString() {
         return "index: "+this.index + " working: "+this.workingDevices+" total: "+this.totalDevices;
