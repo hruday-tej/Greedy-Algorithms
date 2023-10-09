@@ -10,20 +10,24 @@ import Strategies.Bag;
 import Strategies.Strategy1;
 import Strategies.Strategy2;
 import Strategies.Strategy3;
+import Strategies.Strategy4;
+
 
 public class ExecutorUtil {
 
     public static void generateInput() {
         String inp = "";
         Random random = new Random();
-        int n = random.nextInt(10000) + 5000; // Random integer between 20 and 30
-        int k = 200;
+        // int n = random.nextInt(5000) + 5000; // Random integer between 20 and 30
+        int n = 10000;
+        // int k = random.nextInt(300)+300;
+        int k = 1500;
         inp = n + " " + k + "\n";
 
         for (int i = 0; i < n; i++) {
             int total = random.nextInt(101) + 100; // Random integer between 100 and 200
-            double perc = (random.nextInt(51) + 40) / 100.0; // Random double between 0.40 and 0.90
-            int working = (int) (total * perc);
+            // double perc = (random.nextInt(100) + 40) / 100.0; // Random double between 0.40 and 0.90
+            int working = random.nextInt(total);
             inp = inp + working + " " + total + "\n";
         }
 
@@ -65,13 +69,13 @@ public class ExecutorUtil {
             Strategy1 s1 = new Strategy1(n, k, bags);
             s1.execute();
             System.out.println("Strategy 1 ->" + s1.CalculatePercentage());
-            Strategy1 s2 = new Strategy1(n, k, bags);
+            Strategy2 s2 = new Strategy2(n, k, bags);
             s2.execute();
             System.out.println("Strategy 2 ->" + s2.CalculatePercentage());
-            Strategy1 s3 = new Strategy1(n, k, bags);
+            Strategy3 s3 = new Strategy3(n, k, bags);
             s3.execute();
             System.out.println("Strategy 3 ->" + s3.CalculatePercentage());
-            Strategy1 s4 = new Strategy1(n, k, bags);
+            Strategy4 s4 = new Strategy4(n, k, bags);
             s4.execute();
             System.out.println("Strategy 4 ->" + s4.CalculatePercentage());
         } catch (IOException e) {

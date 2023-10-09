@@ -121,7 +121,7 @@ public class Strategy1 {
         double stopTime = System.currentTimeMillis();
         long y = System.nanoTime();
 
-        System.out.println(pickedBags.toString().replace(",", " ")
+        System.out.println(pickedBags.toString().replace(",", "")
                 .replace("[", "")
                 .replace("]", ""));
 

@@ -33,10 +33,9 @@ class Strategy4Comparator implements Comparator<Bag> {
         // System.out.println("ratio 1 -> "+ratio1+" ratio 2 -> "+ratio2);
         if (ratio1 != ratio2) {
             return Double.compare(ratio2, ratio1);
-        } else {
-            Integer.compare(b1.index, b2.index);
         }
-        return Integer.compare(b1.workingDevices, b2.workingDevices);
+        
+        return Integer.compare(b1.index, b2.index);
     }
 }
 
@@ -44,12 +43,13 @@ public class Strategy4 {
     public int n;
     public int k;
     public Bag[] bags;
-    PriorityQueue<Bag> priorityQueue = new PriorityQueue<Bag>(n, new Strategy4Comparator());
+    PriorityQueue<Bag> priorityQueue;
 
     public Strategy4(int n, int k, Bag[] bags) {
         this.n = n;
         this.k = k;
         this.bags = bags;
+        priorityQueue = new PriorityQueue<Bag>(n, new Strategy4Comparator());
                 for (int iterator = 0; iterator < n; iterator++) {
 
             // System.out.println("BAGSSS -> "+bags[iterator].totalDevices + " " +
@@ -87,6 +87,7 @@ public class Strategy4 {
 
     }
     public double CalculatePercentage(){
+        System.out.println("in 44");
         PriorityQueue <Bag> pqDup = priorityQueue;
         double percentage = 0;
         while(pqDup.size()!=0){
@@ -136,9 +137,9 @@ public class Strategy4 {
             k--;
         }
 
-        System.out.println(pickedBags.toString().replace(",", " ")
+        System.out.println(pickedBags.toString().replace(",", "")
                 .replace("[", "")
-                .replace("]", ""));
+                .replace("]", "").replace("-n", ""));
 
     }
 }

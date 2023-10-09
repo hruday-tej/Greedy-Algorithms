@@ -30,12 +30,10 @@ public class Strategy3 {
             priorityQueue.add(bags[itr]);
         }
     }
-    
 
-    public double CalculateTimetaken() {
-        long startTime = System.nanoTime();
-
-        // Run a loop k times.
+    public double execute(){
+        long x = System.nanoTime();
+        int m = k;
         while (k-- > 0) {
             // Pick the bag with minimum workingDevices/totalDevices ratio.
             Bag bagWithMinRatio = priorityQueue.poll();
@@ -45,13 +43,12 @@ public class Strategy3 {
             // Re-insert the bag to the minHeap so that it can be picked later.
             priorityQueue.add(bagWithMinRatio);
         }
-        long endTime = System.nanoTime();
-        // System.out.println(y-x);
-        return TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
-
+        long y = System.nanoTime();
+        return TimeUnit.MILLISECONDS.convert(y - x, TimeUnit.NANOSECONDS);
     }
 
-    public double execute(){
+    public double CalculatePercentage(){
+        System.out.println("in 33");
         PriorityQueue <Bag> pqDup = priorityQueue;
         double percentage = 0;
         while(pqDup.size()!=0){
@@ -72,7 +69,7 @@ public class Strategy3 {
         // Iterate to take input.
         for (int i = 0; i < n; i++) {
             String[] counts = sc.nextLine().trim().split(" ");
-            bags.add(new Bag(i, Integer.parseInt(counts[0]), Integer.parseInt(counts[1])));
+            bags.add(new Bag(Integer.parseInt(counts[0]), Integer.parseInt(counts[1]), i));
         }
         // close input scanner
         sc.close();
@@ -91,7 +88,7 @@ public class Strategy3 {
             pickedBags.add(bagWithMinRatio.index);
         }
         // print out result.
-        String output = pickedBags.toString().replace(",", " ")
+        String output = pickedBags.toString().replace(",", "")
                 .replace("[", "")
                 .replace("]", "");
         System.out.println(output);

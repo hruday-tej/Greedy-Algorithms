@@ -37,22 +37,9 @@ public class Strategy2 {
         }
     }
     public double execute(){
-        PriorityQueue <Bag> pqDup = priorityQueue;
-        double percentage = 0;
-        while(pqDup.size()!=0){
-            Bag b = pqDup.poll();
-            percentage += b.calculatePercentage();
-        }
-
-        return percentage/n;
-    }
-    public double CalculateTimetaken() {
-        long startTime = System.nanoTime();
-        // Iterate to take input.
-        
-
-        // Run a loop k times.
-        while (k-- > 0) {
+        long x = System.nanoTime();
+        int m = k;
+        while (m-- > 0) {
             // Pick the bag with minimum workingDevices/totalDevices ratio.
             Bag bagWithMinRatio = priorityQueue.poll();
             // Add 1 workingDevices device to the bag
@@ -61,9 +48,18 @@ public class Strategy2 {
             // Re-insert the bag to the minHeap so that it can be picked later.
             priorityQueue.add(bagWithMinRatio);
         }
-        long endTime = System.nanoTime();
-        // System.out.println(y-x);
-        return TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
+        long y = System.nanoTime();
+        return TimeUnit.MILLISECONDS.convert(y - x, TimeUnit.NANOSECONDS);
+    }
+    public double CalculatePercentage(){
+        PriorityQueue <Bag> pqDup = priorityQueue;
+        double percentage = 0;
+        while(pqDup.size()!=0){
+            Bag b = pqDup.poll();
+            percentage += b.calculatePercentage();
+        }
+
+        return percentage/n;
     }
 
     public static void main(String[] args) {
@@ -76,7 +72,7 @@ public class Strategy2 {
         // Iterate to take input.
         for (int i = 0; i < n; i++) {
             String[] counts = sc.nextLine().trim().split(" ");
-            bags.add(new Bag(i, Integer.parseInt(counts[0]), Integer.parseInt(counts[1])));
+            bags.add(new Bag(Integer.parseInt(counts[0]), Integer.parseInt(counts[1]), i));
         }
         // close input scanner
         sc.close();
@@ -95,7 +91,7 @@ public class Strategy2 {
             pickedBags.add(bagWithMinRatio.index);
         }
         // print out result.
-        String output = pickedBags.toString().replace(",", " ")
+        String output = pickedBags.toString().replace(",", "")
                 .replace("[", "")
                 .replace("]", "");
         System.out.println(output);
