@@ -34,7 +34,7 @@ class Strategy4Comparator implements Comparator<Bag> {
         if (ratio1 != ratio2) {
             return Double.compare(ratio2, ratio1);
         }
-        
+
         return Integer.compare(b1.index, b2.index);
     }
 }
@@ -46,11 +46,12 @@ public class Strategy4 {
     PriorityQueue<Bag> priorityQueue;
 
     public Strategy4(int n, int k, Bag[] bags) {
+        // Constructor of strategy class to initialize all the fields class attributes
         this.n = n;
         this.k = k;
         this.bags = bags;
         priorityQueue = new PriorityQueue<Bag>(n, new Strategy4Comparator());
-                for (int iterator = 0; iterator < n; iterator++) {
+        for (int iterator = 0; iterator < n; iterator++) {
 
             // System.out.println("BAGSSS -> "+bags[iterator].totalDevices + " " +
             // bags[iterator].workingDevices);
@@ -60,6 +61,9 @@ public class Strategy4 {
     }
 
     public double execute() {
+        /*
+         * This method is used only during invocation of Strategy4 using ExecutorUtil.java
+         */
         long startTime = System.nanoTime();
 
         List<Integer> pickedBags = new ArrayList<>();
@@ -86,16 +90,20 @@ public class Strategy4 {
         return TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
 
     }
-    public double CalculatePercentage(){
+
+    public double CalculatePercentage() {
+        /*
+         * This method is used to calculate the percentage after the allocation of bags
+         */
         System.out.println("in 44");
-        PriorityQueue <Bag> pqDup = priorityQueue;
+        PriorityQueue<Bag> pqDup = priorityQueue;
         double percentage = 0;
-        while(pqDup.size()!=0){
+        while (pqDup.size() != 0) {
             Bag b = pqDup.poll();
             percentage += b.calculatePercentage();
         }
 
-        return percentage/n;
+        return percentage / n;
     }
 
     public static void main(String[] args) {
@@ -106,6 +114,7 @@ public class Strategy4 {
         // Initializing the arrays to store the data
         Bag[] bags = new Bag[n];
         PriorityQueue<Bag> pq = new PriorityQueue<Bag>(n, new Strategy4Comparator());
+        // List to keep track of the picked indices of bags
         List<Integer> pickedBags = new ArrayList<>();
         for (int iterator = 0; iterator < n; iterator++) {
             int inputWorkingDevices = scanner.nextInt();

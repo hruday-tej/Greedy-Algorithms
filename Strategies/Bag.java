@@ -9,6 +9,7 @@ public class Bag {
         this.totalDevices = totalDevices;
         this.index = index;
     }
+    // Utility function to calculate percentage
     public int calculatePercentage() {
         return (int) ((workingDevices * 100) / totalDevices);
     }
